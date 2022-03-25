@@ -18,6 +18,13 @@ class PaymentController extends Controller
         return view('auth.paymentview');
     }
 
+    public function paymentio()
+    {
+        // print_r("faffadsf");die;
+        return view('auth.payment-method');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -48,12 +55,12 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
         $response = curl_exec($ch);
-        curl_close($ch); 
+        curl_close($ch);
         $response=json_decode($response);
         echo '<pre>';
         // print_r($response);die;
         echo $response;
-        
+
     }
 
     /**
@@ -68,9 +75,9 @@ class PaymentController extends Controller
         // print_r("kjkfasf");die;
         $request->validate([
             'username' => ['required', 'string', 'max:255'],
-            'coins' => ['required', 'int'],
-            
+            'coins' => ['required', 'int','min:100'],
         ]);
+
         $payment = payment::create([
             'username' => $request->username,
             'coins' => $request->coins,

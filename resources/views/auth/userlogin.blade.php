@@ -50,7 +50,7 @@
                                     <div class="mb-3">
                                         <label class="form-label text-light">Phone Number</label>
                                         <input type="text" class="form-control" required
-                                          name="phone_number"  placeholder="Enter Mobile Number">
+                                          name="phone_number"  placeholder="Enter Mobile Number" readonly="readonly" value="{{$phone}}">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label text-light">Password</label>

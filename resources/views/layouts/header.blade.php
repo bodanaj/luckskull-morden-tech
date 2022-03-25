@@ -9,6 +9,7 @@
     <!-- Stylesheet-->
     <link rel="stylesheet" href="assets1/css/style.css">
     <link rel="stylesheet" href="assets1/css/animate.css">
+    <link rel="stylesheet" href="assets/css/payment.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets1/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets1/css/font-awesome.min.css">
@@ -45,15 +46,19 @@
     <div class="sidenav-profile">
         <div class="user-profile"><img src="assets1/img/logo.png" alt=""></div>
         <div class="user-info">
-            <h6 class="user-name mb-0">+91 7992281821</h6>
-            <p class="available-balance">Wallet Balance <span>$<span class="counter">523.98</span></span></p>
+            <h6 class="user-name mb-0">
+                @php
+                    echo "+91-".Session::get('phone');
+                @endphp
+            </h6>
+            {{-- <p class="available-balance">Wallet Balance <span>$<span class="counter">523.98</span></span></p> --}}
         </div>
     </div>
     <!-- Sidenav Nav-->
     <ul class="sidenav-nav pl-0">
         <li><a href="#"><i class="lni lni-user"></i>My Profile</a></li>
         <li><a href="#"><i class="lni lni-money-location"></i>Withdraw Details</a></li>
-        <li><a href="{{url('create-id')}}"><i class="lni lni-users"></i>Create ID</a></li>
+        <li><a href="{{url('account-information')}}"><i class="lni lni-users"></i>Create ID</a></li>
         <li><a href="#"><i class="lni lni-revenue"></i>Refer & Earn</a></li>
         <li><a href="#"><i class="lni lni-pencil"></i>Terms</a></li>
         <li><a href="#"><i class="lni lni-empty-file"></i>Notification</a></li>
@@ -62,7 +67,7 @@
             @csrf
     <li><a href="route('logout')"onclick="event.preventDefault(); this.closest('form').submit();" ><i class="lni lni-power-switch"></i>Logout</a></li>
       </form>
-            
+
     </ul>
     <!-- Go Back Button-->
     <div class="go-home-btn" id="goHomeBtn"><i class="lni lni-arrow-left"></i></div>

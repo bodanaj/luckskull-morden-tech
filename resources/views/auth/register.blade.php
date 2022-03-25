@@ -44,32 +44,36 @@
                                       <a href="login.php"><li class="breadcrumb-item active page-heading" aria-current="page"><i class="fa fa-arrow-circle-o-left yellow-text" aria-hidden="true"></i>&nbsp;&nbsp;Register</li></a>
                                     </ol>
                                   </nav>
+
                                 <form id="Form" class="form-dark" action="{{ route('register') }}" method="POST">
                                     @csrf
+                                    {{-- @php
+                                        print_r($errors->all());
+                                    @endphp --}}
                                     <div class="mb-3">
                                         <label class="form-label text-light">Name*</label>
                                         <input type="text" class="form-control" required
-                                          name="name"  >
+                                          name="name"  value="{{old('name')}}">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label text-light">Phone Number*</label>
                                         <input type="text" class="form-control" required
-                                          name="phone_number"  >
+                                          name="phone_number" value="{{$phone}}" readonly="readonly" value="{{old('phone_number')}}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="password" :value="__('Password')" class="form-label text-light">Password</label>
+                                        <label for="password" :value="__('Password')" class="form-label text-light">Password*</label>
                                         <input type="text" class="form-control" required
                                           name="password" required autocomplete="new-password"  >
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-light" for="password_confirmation" :value="__('Confirm Password')">Confirm Password</label>
+                                        <label class="form-label text-light" for="password_confirmation" :value="__('Confirm Password')">Confirm Password*</label>
                                         <input type="text" class="form-control" required
                                         name="password_confirmation" required   >
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label text-light">Referrall\promo code</label>
-                                        <input type="text" class="form-control" required
-                                          name="refferral_code"  >
+                                        <input type="text" class="form-control"
+                                          name="refferral_code"  value="{{old('refferral_code')}}">
                                     </div>
                                     <div class="d-grid my-4">
                                         <button class="btn btn-light padding-10" type="submit">Login</button>

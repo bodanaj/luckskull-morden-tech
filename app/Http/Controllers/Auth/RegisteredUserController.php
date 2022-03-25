@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules;
 use Twilio\Rest\Client;
 
@@ -22,7 +23,8 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        $phone = Session::get('phone');
+        return view('auth.register',['phone'=>$phone]);
     }
 
     /**
@@ -35,35 +37,40 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        // echo "<pre>";
+        // print_r($request->all());
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'int'],
             'password' => ['required', 'confirmed'],
-            'refferral_code' => ['required', 'string'],
         ]);
-        
+        // echo "<pre>";
+        // print_r($request->all());
+
         $user = User::create([
             'name' => $request->name,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
             'refferral_code' => $request->refferral_code,
         ]);
-        
+
         event(new Registered($user));
-        
+
         Auth::login($user);
+        $this->sendCustomMessage($request);
         return redirect(RouteServiceProvider::HOME);
     }
+
     public function sendCustomMessage(Request $request)
     {
-        $this->sendCustomMessage($request);
         // dd($request->all());
-        $request['body']="hello how are you";
+        $otp = rand(1000, 9999);
+        $request['body']="hi luckskull varification code is:".$otp;
 
         $validatedData = $request->validate([
             'phone_number' => 'required',
             'body' => 'required',
-            
+
         ]);
         $recipients = '+91'.$validatedData["phone_number"];
         // iterate over the array of recipients and send a twilio request for each
@@ -72,11 +79,7 @@ class RegisteredUserController extends Controller
         // }
         return back()->with(['success' => "Messages on their way!"]);
     }
-    /**
-     * Sends sms to user using Twilio's programmable sms client
-     * @param String $message Body of sms
-     * @param Number $recipients Number of recipient
-     */
+
     private function sendMessage($message, $recipients)
     {
         app()->environment();

@@ -12,8 +12,9 @@ use Twilio\Rest\Client;
 use App\Models\registeruser;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Auth\User as Authenticatable; 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Session;
 use Validator;
 
 class LoginController extends Controller
@@ -40,10 +41,11 @@ class LoginController extends Controller
     }
     public function getlogin()
     {
-        return view('auth.userlogin');
+        $phone = Session::get('phone');
+        return view('auth.userlogin',['phone'=>$phone]);
 
     }
-    
+
     public function sentotp()
     {
         return view('auth.otp_page');
@@ -61,17 +63,17 @@ class LoginController extends Controller
             'phone_number' => ['required'],
             'password' => ['required'],
         ]);
- 
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
+
             return redirect()->intended('dashboard');
         }
- 
+
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
-    
+
     }
     /**
      * Show the form for creating a new resource.
@@ -80,27 +82,27 @@ class LoginController extends Controller
      */
     public function create(Request $request)
     {
-        
+
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'password' => ['required', 'confirmed'],
                 'phone_number' => ['required', 'int'],
                 'refferral_code' => ['']
             ]);
-            
+
             $user = registeruser::insert([
                 'name' => $request->name,
                 'phone_number' => $request->phone_number,
                 'password' => Hash::make($request->password),
                 'refferral_code' => $request->refferral_code,
             ]);
-            
+
             event(new Registered($user));
-            
-            
+
+
             // print_r($user);die;
             return redirect(RouteServiceProvider::HOME);
-        
+
     }
 
     /**
@@ -112,12 +114,9 @@ class LoginController extends Controller
     public function store(Request $request)
     {
         $users = User::where('phone_number', $request->phone_number)->get();
-        // print_r($users);die;
-
-        # check if email is more than 1
+        Session::put('phone',$request->phone_number);
         if(sizeof($users) > 0){
-            # tell user not to duplicate same email
-           
+
             return redirect()->route('userlogin');
         }
        else{
@@ -128,11 +127,10 @@ class LoginController extends Controller
         $user = Login::create([
             'phone_number' => $request->phone_number,
         ]);
-         
+
         event(new Registered($user));
 
         // Auth::login($user);
-        $this->sendCustomMessage($request);
         return redirect()->route('registerform');
     }
     }
@@ -146,7 +144,7 @@ class LoginController extends Controller
         $validatedData = $request->validate([
             'phone_number' => 'required',
             'body' => 'required',
-            
+
         ]);
         $recipients = '+91'.$validatedData["phone_number"];
         // iterate over the array of recipients and send a twilio request for each

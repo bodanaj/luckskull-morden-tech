@@ -14,7 +14,7 @@
                     <div class="notification-area pt-3 pb-2">
                         <div class="list-group">
                             <div class="col-lg-12 col-md-12">
-                            <a href="create-id" class="list-group-item d-flex align-items-center flip">
+                            <div class="list-group-item d-flex align-items-center flip">
                                 <div class="col-lg-8 d-flex space-between">
                                     <span class="noti-icon">
                                         <img src="https://api.gopunt.com/uploads/accounts/accImg-1621400719659.png" alt="" class="ids-images">
@@ -24,9 +24,9 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4" align="right">
-                                    <button class="btn btn-secondary btn-sm btn-orange">Create ID</button>
+                                    <a href="create-id" class="btn btn-secondary btn-sm btn-orange">Create ID</a>
                                 </div>
-                            </a>
+                            </div>
                             <div class="panel">
                                 <div class="col-lg-12 col-md-12">
                                     <span> <img src="assets1/img/svg/active-football.svg" style="height:13px"></span>
@@ -36,7 +36,7 @@
                                     <span> <img src="assets1/img/svg/active-horse_racing.svg" style="height:13px"></span>
                                     <span> <img src="assets1/img/svg/active-politics.svg" style="height:13px"></span>
 
-                                
+
                                 </div>
                                <div class="col-md-12 col-lg-12">
                                     <div class="card user-data-card bg-black">
@@ -80,35 +80,35 @@
                                             <div class="title d-flex align-items-center">
                                             <img src="assets1/img/svg/bet-tennis.svg" style="height:13px"><span>Tennis</span></div>
                                             <div class="data-content">100</div>
-                                        </div>  
-                                        
+                                        </div>
+
                                         <div class="single-profile-data d-flex align-items-center justify-content-between">
                                             <div class="title d-flex align-items-center">
                                             <img src="assets1/img/svg/bet-horse_racing.svg" style="height:13px">
                                                 <span>Horse Racing</span></div>
                                             <div class="data-content">100</div>
-                                        </div>  
+                                        </div>
 
                                         <div class="single-profile-data d-flex align-items-center justify-content-between">
                                             <div class="title d-flex align-items-center">
                                             <img src="assets1/img/svg/bet-politics.svg" style="height:13px">
                                                 <span>Politics</span></div>
                                             <div class="data-content">100</div>
-                                        </div>  
+                                        </div>
 
                                         <div class="single-profile-data d-flex align-items-center justify-content-between">
                                             <div class="title d-flex align-items-center">
                                             <img src="assets1/img/svg/bet-cards.svg" style="height:13px">
                                                 <span>Cards</span></div>
                                             <div class="data-content">100</div>
-                                        </div>  
+                                        </div>
 
                                         <div class="single-profile-data d-flex align-items-center justify-content-between">
                                             <div class="title d-flex align-items-center">
                                             <img src="assets1/img/svg/bet-casino.svg" style="height:13px">
                                                 <span>Live Casino</span></div>
                                             <div class="data-content">100</div>
-                                        </div>  
+                                        </div>
                                     </div>
                                 </div>
                             </div>

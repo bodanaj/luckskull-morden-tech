@@ -11,8 +11,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-
-
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +29,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    if (Session::get('phone')!=null) {
+        # code...
+        return view('dashboard');
+    }
+    else
+    {
+        url('login');
+    }
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
@@ -62,6 +68,9 @@ Route::get('create-account', [PaymentController::class ,'index'])->name('create-
 Route::post('createfrom', [PaymentController::class ,'store'])->name('createfrom');
 
 Route::get('image-upload', [ ImageUploadController::class, 'imageUpload' ])->name('image.upload');
+
+
+Route::get('payment-io-page', [ PaymentController::class, 'paymentio' ])->name('payment.method');
 Route::post('image-upload', [ ImageUploadController::class, 'imageUploadPost' ])->name('image.upload.post');
 
 // admin routes

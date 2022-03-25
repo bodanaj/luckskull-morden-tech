@@ -47,20 +47,20 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-11 col-lg-11 padding-0 mx-auto">
 
                     <form id="loginForm" class="form-dark" method="POST" action="{{ route('createfrom') }}">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label text-light">Username *</label>
-                            <input type="text" class="form-control" :value="old('username')" required autofocus
+                            <input type="text" class="form-control text-white" :value="old('username')" required autofocus
                                           name="username">
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-light">Deposite Coin*</label>
-                            <input type="text" class="form-control" :value="old('coins')" required autofocus
-                                          name="coins">
+                            <input type="number" class="form-control text-white" :value="old('coins')" required autofocus
+                                          name="coins" value="100">
                         </div>
                         <div class="form-check">
                             <label class="form-check-label text-light">
@@ -70,7 +70,7 @@
                             </label>
                         </div>
                         <div class="d-grid my-4 text-light">
-                            <button class="btn btn-warning padding-10" type="submit">Continue to PAY Rs 100</button> 
+                            <button class="btn btn-warning padding-10" type="submit">Continue to PAY Rs 100</button>
                     </form>
                     </div>
                 </div>
