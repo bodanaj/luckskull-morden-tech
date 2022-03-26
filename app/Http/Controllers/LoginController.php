@@ -11,6 +11,7 @@ use App\Providers\RouteServiceProvider;
 use Twilio\Rest\Client;
 use App\Models\registeruser;
 use App\Models\User;
+use App\Models\varifyotp;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Auth\Events\Validated;
@@ -46,11 +47,7 @@ class LoginController extends Controller
 
     }
 
-    public function sentotp()
-    {
-        return view('auth.otp_page');
-
-    }
+    
     public function login(Request $request)
     {
         // print_r($request->phone_number);die;
@@ -98,10 +95,10 @@ class LoginController extends Controller
             ]);
 
             event(new Registered($user));
-
+            $this->sendCustomMessage($request);
 
             // print_r($user);die;
-            return redirect(RouteServiceProvider::HOME);
+            return view('otp-login');
 
     }
 
@@ -167,12 +164,17 @@ class LoginController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Login  $login
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Login $login)
+    public function varify_otp(Request $request)
     {
-        //
+        $users = User::where('otp', $request->otp)->get();
+        Session::put('phone',$request->phone_number);
+        if(sizeof($users) > 0){
+
+            return redirect()->route('userlogin');
+        }  
     }
 
     /**

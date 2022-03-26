@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules;
 use Twilio\Rest\Client;
+use App\Models\varifyotp;
+use DateTime;
 
 class RegisteredUserController extends Controller
 {
@@ -53,17 +55,16 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'refferral_code' => $request->refferral_code,
         ]);
-
         event(new Registered($user));
-
+        
         Auth::login($user);
-        $this->sendCustomMessage($request);
-        return redirect(RouteServiceProvider::HOME);
+        $userid=$user->id;
+        $this->sendCustomMessage($request,$userid);
+        return redirect()->route('otp-login');
     }
 
-    public function sendCustomMessage(Request $request)
+    public function sendCustomMessage(Request $request,$userid)
     {
-        // dd($request->all());
         $otp = rand(1000, 9999);
         $request['body']="hi luckskull varification code is:".$otp;
 
@@ -73,6 +74,14 @@ class RegisteredUserController extends Controller
 
         ]);
         $recipients = '+91'.$validatedData["phone_number"];
+       
+        $user = varifyotp::insert([
+            'phone_number' => $request->phone_number,
+            'otp' => $otp,
+            'otp_time'=>date('Y-m-d H:i:s'),
+            'user_id' =>$userid
+        ]);
+        event(new Registered($user));
         // iterate over the array of recipients and send a twilio request for each
         // foreach ($recipients as $recipient) {
             $this->sendMessage($validatedData["body"], $recipients);

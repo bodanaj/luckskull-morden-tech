@@ -12,6 +12,7 @@ use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\otpvarifyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,8 +60,11 @@ Route::get('payment', [PaymentController::class, 'create'])->name('payment');
 Route::get('userlogin', [LoginController::class, 'getlogin'])->name('userlogin');
 Route::post('userloginform', [LoginController::class, 'login'])->name('userloginform');
 
+Route::get('otp-login', [otpvarifyController::class, 'index'])->name('otp-login');
+Route::get('varify', [otpvarifyController::class, 'varify_otp'])->name('varify');
 
-Route::get('otp-login', [LoginController::class, 'sentotp'])->name('otp-login');
+
+
 Route::get('change-password', [ChangePasswordController::class, 'index']);
 Route::post('change.password', [ChangePasswordController::class, 'store'])->name('change.password');
 

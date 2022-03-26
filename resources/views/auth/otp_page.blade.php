@@ -59,28 +59,29 @@
                                 <p class="text-white-50 text-center mb-4">Please enter the OTP (one time password) to
                                     verify your account. A Code has been sent to <span
                                         class="text-light">*******179</span></p>
-                                <form id="otp-screen" class="form-dark" method="post">
+                                <form id="otp-screen" class="form-dark" action="{{ route('varify') }}" method="GET">
+                                    @csrf
                                     <label class="form-label text-light mb-3">Enter 4 digit code</label>
                                     <div class="row g-3">
                                         <div class="col">
-                                            <input type="text" class="form-control text-center text-6 py-2"
-                                                maxlength="1" required="" autocomplete="off">
+                                            <input type="text" name="fil1" class="form-control text-center text-6 py-2"
+                                                maxlength="1" required autocomplete="off">
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" name="fil2" class="form-control text-center text-6 py-2"
+                                                maxlength="1" required= autocomplete="off">
                                         </div>
                                         <div class="col">
                                             <input type="text" class="form-control text-center text-6 py-2"
-                                                maxlength="1" required="" autocomplete="off">
+                                                maxlength="1" name="fil3" required= autocomplete="off">
                                         </div>
                                         <div class="col">
                                             <input type="text" class="form-control text-center text-6 py-2"
-                                                maxlength="1" required="" autocomplete="off">
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" class="form-control text-center text-6 py-2"
-                                                maxlength="1" required="" autocomplete="off">
+                                                maxlength="1" name="fil4" required="" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="d-grid my-4">
-                                        <a href="home.php" class="btn btn-warning padding-10" type="submit">Verify</a>
+                                        <button  class="btn btn-warning padding-10" type="submit">Verify</button>
                                     </div>
                                 </form>
                                 <p class="text-2 text-center text-light mb-0">Didn't get the code? <a href="#"
